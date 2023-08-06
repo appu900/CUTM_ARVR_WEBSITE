@@ -1,12 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import SignUp from "./Pages/SignUp";
 
 function App() {
-  return (
-    <div className="h-screen bg-gray-800">
-     <p className='text-white sm:text-green-600 md:text-red-600'>hello centurion</p>
-    </div>
-  );
+  return <div className="">
+    <SignUp/>
+  </div>;
 }
 
 export default App;
