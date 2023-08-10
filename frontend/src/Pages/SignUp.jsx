@@ -4,8 +4,38 @@ import Lottie from "lottie-react";
 import metaversePlainAnimation from "../assests/meta.json";
 import flyingMetaverseAnimation from "../assests/flying.json";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 const SignUp = () => {
+
+  const[user,setUser] = useState({
+    username:'',
+    email:'',
+    phoneNumber:'',
+    password:'',
+  })
+
+
+     
+
+ 
+
+  async function onSignup(){
+
+    try {
+
+      const response = await axios.post('url')
+      console.log("signup done for the user");
+      
+    } catch (error) {
+
+      console.log("error occured",error.message);
+      
+    }
+
+  }
+
   return (
     <div className="md:w-full md:flex md:h-screen relative border bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800 ">
       {/* first div for form card --- with 50% height and width */}
@@ -18,6 +48,8 @@ const SignUp = () => {
             <div>
               <p className="font-semibold text-sm">Name</p>
               <input
+                value={user.username}
+                onChange={e=>setUser({...user,username:e.target.value})}
                 type=" text"
                 className="border mt-2 border-gray-400 p-3 w-full rounded-lg
                focus:ring-blue-500 focus:border-blue-600 tracking-wide font-semibold outline-none
@@ -29,6 +61,9 @@ const SignUp = () => {
             <div>
               <p className="font-semibold text-sm">Email</p>
               <input
+                value={user.email}
+                onChange={e=>setUser({...user,email:e.target.value})}
+
                 type="email"
                 className="border mt-2 border-gray-400 p-3 w-full rounded-lg
                focus:ring-blue-500 focus:border-blue-700 tracking-wide font-semibold outline-none
@@ -40,6 +75,9 @@ const SignUp = () => {
             <div>
               <p className="font-semibold text-sm">Phone Number</p>
               <input
+                value={user.phoneNumber}
+                onChange={e=>setUser({...user,phoneNumber:e.target.value})}
+
                 type=" text"
                 className="border mt-2 border-gray-400 p-3 w-full rounded-lg
                focus:ring-blue-500 focus:border-blue-700 tracking-wide font-semibold outline-none
@@ -51,6 +89,9 @@ const SignUp = () => {
             <div>
               <p className="font-semibold text-sm">Password</p>
               <input
+                value={user.password}
+                onChange={e=>setUser({...user,password:e.target.value})}
+
                 type="password"
                 className="border mt-2 border-gray-400 p-3 w-full rounded-lg
                focus:ring-blue-500 focus:border-blue-700 tracking-wide font-semibold outline-none
