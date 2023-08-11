@@ -1,7 +1,9 @@
+require('dotenv').config();
 const express = require("express");
 const userRouter = require("./Routes/UserRoutes");
 const { default: mongoose } = require("mongoose");
-const cors = require('cors')
+const cors = require('cors');
+const cookieParser = require('cookie-parser')
 
 //* block for database connection
 // * this code is for local database to be hosted on server tier-2.
@@ -19,6 +21,7 @@ async function connectDataBase() {
 
 
 const app = express();
+app.use(cookieParser())
 app.use(cors());
 app.use(express.json())
 app.use(userRouter);

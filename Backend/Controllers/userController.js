@@ -1,7 +1,8 @@
 const User = require("../Modals/UserModals");
 const bcryptjs = require("bcryptjs");
 const jwt = require('jsonwebtoken');
-const Jwt_key = "centurion arvr lab";
+const cookieParser = require('cookie-parser');
+const { config } = require("dotenv");
 
 
 exports.signup = async (request, response, next) => {
@@ -45,6 +46,7 @@ exports.signin = async (request,response,next) =>{
     try {
 
         const{email,password} = request.body;
+        // console.log(request.body)
         let existingUser = await User.findOne({email});
 
         if(!existingUser){
@@ -56,9 +58,16 @@ exports.signin = async (request,response,next) =>{
             return response.status(400).json({message:"wrong password"});
         }
 
-        const token = jwt.sign({id:existingUser._id},Jwt_key,{
-            expiresIn:"1hr"
+        const token = jwt.sign({id:existingUser._id},process.env.Jwt_key,{
+            expiresIn:"30s"
         })
+
+        response.cookie(String(existingUser._id),token,{
+            path:'/',
+            expires:new Date(Date.now() + 1000 * 30),
+            httpOnly:true,
+            sameSite:'lax'
+        });
 
         return response.status(200).json({mesaage:"signin done",existingUser,token});
         
@@ -66,6 +75,52 @@ exports.signin = async (request,response,next) =>{
         return response.status(400).json({message:error.message})
     }
     
+}
+
+
+exports.verifyToken = (request,response,next) =>{
+
+
+     const cookies = request.headers.cookie;
+    //  console.log(cookies)
+     const token = cookies.split("=")[1];
+     console.log(token);
+    if(!token){
+        return response.status(404).json({message:"no token found"})
+    }
+
+    jwt.verify(String(token),process.env.Jwt_key,(error,user)=>{
+        if(error){
+            return response.status(400).json({message:"invalid token"})
+        }
+        console.log(user.id);
+        request.id = user.id;
+
+    });
+
+    next();
+   
+};
+
+
+exports.getUser = async(request,response,next) =>{
+
+    const userId = request.id;
+    let user;
+    try {
+
+        user = await User.findById(userId,"-password");
+        
+    } catch (error) {
+        return new Error(error)
+    }
+
+    if(!user){
+        return response.status(404).json({message:"user not found"})
+    }
+
+    return response.status(200).json({user})
+
 }
 
 
