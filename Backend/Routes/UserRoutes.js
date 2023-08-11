@@ -4,7 +4,10 @@ const userController = require('../Controllers/userController')
 
 
 
-router.post("/signup",userController.signup);
+router
+      .post("/signup",userController.signup)
+      .post("/signin",userController.signin)
+    //   .get("/user",)
 
 
 

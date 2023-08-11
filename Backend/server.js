@@ -9,6 +9,7 @@ const cors = require('cors')
 
 
 
+
 connectDataBase().catch((error) => console.log(error));
 async function connectDataBase() {
   await mongoose.connect("mongodb+srv://appudq670:jarvis7735@cluster0.phvznk8.mongodb.net/?retryWrites=true&w=majority");
