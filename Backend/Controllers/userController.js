@@ -42,7 +42,7 @@ exports.signin = async (request, response, next) => {
     if (!existingUser) {
       return response
         .status(400)
-        .json({ message: "user not found sign up first" });
+        .json({ message: "user not found sign up first"});
     }
 
     const checkValidPassword = await bcryptjs.compare(
@@ -62,7 +62,7 @@ exports.signin = async (request, response, next) => {
       maxAge: 3600000,
       // expires:new Date(Date.now() + 1000 * 30),
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: "lax"
     });
 
     return response

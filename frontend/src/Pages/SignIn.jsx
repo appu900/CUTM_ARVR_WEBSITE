@@ -1,11 +1,50 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import flyingMetaverseAnimation from "../assests/flying.json";
 import metaversePlainAnimation from "../assests/meta.json";
-import secondAnimation from "../assests/secondAnimation.json"
+import secondAnimation from "../assests/secondAnimation.json";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
+  const navigate = useNavigate();
+  const [loding, setLoding] = useState(false);
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const onSignIn = async () => {
+    try {
+      setLoding(true);
+      const response = await axios.post("http://localhost:5000/signin", user);
+      await toast.success("wooo welcome !", {
+        position: "top-right",
+        autoClose: 1000,
+        theme: "colored",
+      });
+      setLoding(false);
+      navigate("/");
+      setUser({
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      let err = error.message;
+      console.log(err);
+      await toast.error("invalid email or password", {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "colored",
+      });
+    }
+
+    finally{
+      setLoding(false)
+    }
+  };
+
   return (
     <div className="md:w-full md:flex md:h-screen relative border bg-gradient-to-r from-purple-800 via-violet-900 to-purple-800 ">
       {/* first div for form card --- with 50% height and width */}
@@ -21,6 +60,8 @@ const SignIn = () => {
             <div>
               <p className="font-semibold text-sm">Email</p>
               <input
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
                 type="email"
                 className="border mt-2 border-gray-400 p-3 w-full rounded-lg
                focus:ring-blue-500 focus:border-blue-700 tracking-wide font-semibold outline-none
@@ -32,6 +73,8 @@ const SignIn = () => {
             <div>
               <p className="font-semibold text-sm">Password</p>
               <input
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
                 type="password"
                 className="border mt-2 border-gray-400 p-3 w-full rounded-lg
                focus:ring-blue-500 focus:border-blue-700 tracking-wide font-semibold outline-none
@@ -41,8 +84,11 @@ const SignIn = () => {
             </div>
 
             <div className="mt-2">
-              <button className="md:w-[320px] py-2 px-3 bg-indigo-500 rounded-2xl shadow-xl text-white">
-                Sign-in
+              <button
+                onClick={onSignIn}
+                className="md:w-[320px] py-2 px-3 bg-indigo-500 rounded-2xl shadow-xl text-white active:scale-95"
+              >
+                {loding == true ? "wait a second" : "sign-in"}
               </button>
               <button className="md:w-[320px] mt-5 py-2 px-3 border border-black rounded-2xl shadow-lg text-black">
                 google

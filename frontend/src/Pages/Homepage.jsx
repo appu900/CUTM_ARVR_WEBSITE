@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Homepage = () => {
+  const[user,setUser] = useState([])
   return (
-    <div>Homepage this is kkkk</div>
+    <div>Homepage</div>
   )
 }
 
