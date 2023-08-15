@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import flyingMetaverseAnimation from "../assests/flying.json";
@@ -6,19 +6,29 @@ import metaversePlainAnimation from "../assests/meta.json";
 import secondAnimation from "../assests/secondAnimation.json";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/slices/authSlice";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const [loding, setLoding] = useState(false);
+  const dispatch = useDispatch();
+
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
+  // experiment code
+
+ 
+
   const onSignIn = async () => {
     try {
       setLoding(true);
       const response = await axios.post("http://localhost:5000/signin", user);
+      console.log(response.status);
+      dispatch(login());
       await toast.success("wooo welcome !", {
         position: "top-right",
         autoClose: 1000,
@@ -38,10 +48,8 @@ const SignIn = () => {
         autoClose: 5000,
         theme: "colored",
       });
-    }
-
-    finally{
-      setLoding(false)
+    } finally {
+      setLoding(false);
     }
   };
 

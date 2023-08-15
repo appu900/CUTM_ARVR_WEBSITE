@@ -1,10 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
-  const[user,setUser] = useState([])
-  return (
-    <div>Homepage</div>
-  )
-}
+  const isloggedIn = useSelector((state) => state.auth.userLoggedin);
+  const navigate = useNavigate();
 
-export default Homepage
+  function checkUserAuthorization() {
+    if (isloggedIn == false) {
+      navigate("/signin");
+    }
+  }
+
+  useEffect(() => {
+    // checkUserAuthorization();
+  }, []);
+
+  return <div>Homepage</div>;
+};
+
+export default Homepage;
