@@ -21,8 +21,13 @@ const SignIn = () => {
 
   // experiment code
 
- 
+  // async function authorization(){
+  //   const response = await axios.get("http://localhost:5000/fastauth");
+  //   dispatch(login());
+  //   return;   
+  // }
 
+  
   const onSignIn = async () => {
     try {
       setLoding(true);

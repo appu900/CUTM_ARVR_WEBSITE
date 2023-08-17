@@ -73,11 +73,18 @@ exports.signin = async (request, response, next) => {
   }
 };
 
+
+
 exports.verifyToken = (request, response, next) => {
   const cookies = request.headers.cookie;
+  console.log("this is the cookie - ",cookies);  
   //  console.log(cookies)
-  const token = cookies.split("=")[1];
-  console.log(token);
+  let token;
+  if (cookies) {
+     token = cookies.split("=")[1];
+  }
+
+  console.log("this is the token ",token);
   if (!token) {
     return response.status(404).json({ message: "no token found" });
   }
@@ -109,6 +116,16 @@ exports.getUser = async (request, response, next) => {
   return response.status(200).json({ user });
 };
 
-
-
-
+exports.existAuth = (request, response) => {
+  const cookies = request.headers.cookie;
+  const token = cookies.split("=")[1];
+  if (!token) {
+    return response.status(400).json({ message: "session expired" });
+  }
+  jwt.verify(String(token), process.env.Jwt_key, (error, user) => {
+    if (error) {
+      return response.status(400).json({ message: "need to signin" });
+    }
+    response.status(200).json({ message: "authorized user access" });
+  });
+};

@@ -5,6 +5,7 @@ router
   .post("/signup", userController.signup)
   .post("/signin", userController.signin)
   .get("/user", userController.verifyToken, userController.getUser)
+  .get("/fastauth",userController.existAuth)
   
 
 module.exports = router;
