@@ -9,49 +9,36 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-
 const SignUp = () => {
-
   const navigate = useNavigate();
 
-  const[user,setUser] = useState({
-    username:'',
-    email:'',
-    phoneNumber:'',
-    password:'',
-  })
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+  });
 
-
-     
-
- 
-
-  async function onSignup(){
-
+  async function onSignup() {
     try {
-
-      const response = await axios.post('http://localhost:5000/signup',user);
+      const response = await axios.post("http://localhost:5000/signup", user);
       await toast.success("sign up done now login", {
         position: "top-right",
         autoClose: 1000,
         theme: "colored",
       });
-      navigate('/signin')
+      navigate("/signin");
       setUser({
-        username:'',
-        email:'',
-        phoneNumber:'',
-        password:''
-      })
+        username: "",
+        email: "",
+        phoneNumber: "",
+        password: "",
+      });
       console.log(response);
       console.log("signup done for the user");
-      
     } catch (error) {
-
-      console.log("error occured",error.message);
-      
+      console.log("error occured", error.message);
     }
-
   }
 
   return (
@@ -61,13 +48,15 @@ const SignUp = () => {
         <div className=" mt-6">
           <div className=" flex flex-col bg-white gap-6 py-10 pl-16 h-[660px] rounded-lg backdrop-blur-md shadow-xl">
             <div>
-              <p className="text-xl font-semibold text-gray-600">hey ! Sign-up Here.</p>
+              <p className="text-xl font-semibold text-gray-600">
+                hey ! Sign-up Here.
+              </p>
             </div>
             <div>
               <p className="font-semibold text-sm">Name</p>
               <input
                 value={user.username}
-                onChange={e=>setUser({...user,username:e.target.value})}
+                onChange={(e) => setUser({ ...user, username: e.target.value })}
                 type=" text"
                 className="border mt-2 border-gray-400 p-3 w-full rounded-lg
                focus:ring-blue-500 focus:border-blue-600 tracking-wide font-semibold outline-none
@@ -80,8 +69,7 @@ const SignUp = () => {
               <p className="font-semibold text-sm">Email</p>
               <input
                 value={user.email}
-                onChange={e=>setUser({...user,email:e.target.value})}
-
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
                 type="email"
                 className="border mt-2 border-gray-400 p-3 w-full rounded-lg
                focus:ring-blue-500 focus:border-blue-700 tracking-wide font-semibold outline-none
@@ -94,8 +82,9 @@ const SignUp = () => {
               <p className="font-semibold text-sm">Phone Number</p>
               <input
                 value={user.phoneNumber}
-                onChange={e=>setUser({...user,phoneNumber:e.target.value})}
-
+                onChange={(e) =>
+                  setUser({ ...user, phoneNumber: e.target.value })
+                }
                 type=" text"
                 className="border mt-2 border-gray-400 p-3 w-full rounded-lg
                focus:ring-blue-500 focus:border-blue-700 tracking-wide font-semibold outline-none
@@ -108,8 +97,7 @@ const SignUp = () => {
               <p className="font-semibold text-sm">Password</p>
               <input
                 value={user.password}
-                onChange={e=>setUser({...user,password:e.target.value})}
-
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
                 type="password"
                 className="border mt-2 border-gray-400 p-3 w-full rounded-lg
                focus:ring-blue-500 focus:border-blue-700 tracking-wide font-semibold outline-none
@@ -120,15 +108,18 @@ const SignUp = () => {
 
             <div className="mt-2">
               <button
-              onClick={onSignup}  
-              className="md:w-[320px] py-2 px-3 bg-indigo-500 rounded-2xl shadow-xl text-white active:scale-95">
+                onClick={onSignup}
+                className="md:w-[320px] py-2 px-3 bg-indigo-500 rounded-2xl shadow-xl text-white active:scale-95"
+              >
                 Sign-up
               </button>
               <button className="md:w-[320px] mt-5 py-2 px-3 border border-black rounded-2xl shadow-lg text-black ">
                 google
               </button>
             </div>
-            <p className="text-sm">Already have an accout ? <Link to="/signin">sign-in here</Link></p>
+            <p className="text-sm">
+              Already have an accout ? <Link to="/signin">sign-in here</Link>
+            </p>
           </div>
         </div>
       </div>

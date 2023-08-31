@@ -10,6 +10,8 @@ const Homepage = () => {
   const isloggedIn = useSelector((state) => state.auth.userLoggedin);
   const navigate = useNavigate();
 
+  
+
   const getData = async () => {
     try {
       const response = await axios.get("http://localhost:5000/user");
@@ -22,7 +24,21 @@ const Homepage = () => {
 
   return (
     <div>
-      <button onClick={getData}>click me</button>
+      <div className="w-full p-4 bg-white shadow-slate-200 shadow-xl flex justify-around">
+        <p className="text- font-bold">webiste Icon / name</p>
+        <div className="flex gap-5">
+          <p>link1</p>
+          <p>link2</p>
+          <p>link3</p>
+        </div>
+        <div>
+          <p>User account link</p>
+        </div>
+      </div>
+
+      <div className="mt-10">
+         <button onClick={getData}>get user Data</button>
+      </div>
     </div>
   );
 };
