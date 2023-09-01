@@ -1,33 +1,24 @@
 const mongoose = require("mongoose");
-const {Schema} = mongoose;
 
-
-const userSchema = new Schema({
-   
-    name:{
-        type:String,
-        required:[true,"please provide a valid username"]
-    },
-
-    phoneNumber:{
-        type:String,
-        required:[true,"please provide your contact number"]
-    },
-    email:{
-        type:String,
-        required:[true,"please provide your email"],
-        unique:true
-    },
-
-    password:{
-        type:String,
-        required:[true,"password can not be empty  "],
-        unique:true,
-        minlength:6
-    }
+const userSchema = mongoose.Schema({
+  username: {
+    type: String,
+    required: [true, "please provide a username"],
+  },
+  email: {
+    type: String,
+    required: [true, "please provide a email"],
+    unique: [true, "email address already taken"],
+  },
+  phoneNumber: {
+    type: String,
+    required: [true, "please provide a phoneNumber"],
+    unique: [true, "phone number already taken"],
+  },
+  password: {
+    type: String,
+    required: [true, "please provide a password"],
+  },
 });
 
-
-var User = mongoose.model("user",userSchema);
-module.exports = User;
-
+module.exports = mongoose.model("user", userSchema);

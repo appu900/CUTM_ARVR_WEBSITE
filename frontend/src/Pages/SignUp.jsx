@@ -21,7 +21,7 @@ const SignUp = () => {
 
   async function onSignup() {
     try {
-      const response = await axios.post("http://localhost:5000/signup", user);
+      const response = await axios.post("http://localhost:5000/api/register", user);
       await toast.success("sign up done now login", {
         position: "top-right",
         autoClose: 1000,

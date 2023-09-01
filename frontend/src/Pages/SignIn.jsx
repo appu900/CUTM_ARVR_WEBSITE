@@ -31,7 +31,7 @@ const SignIn = () => {
   const onSignIn = async () => {
     try {
       setLoding(true);
-      const response = await axios.post("http://localhost:5000/signin", user);
+      const response = await axios.post("http://localhost:5000/api/login", user);
       console.log(response.status);
       dispatch(login());
       await toast.success("wooo welcome !", {

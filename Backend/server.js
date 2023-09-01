@@ -5,6 +5,11 @@ const { default: mongoose } = require("mongoose");
 const cors = require('cors');
 const cookieParser = require('cookie-parser')
 
+
+
+
+
+
 //* block for database connection
 // * this code is for local database to be hosted on server tier-2.
 // * cloud password jarvis7735
@@ -21,10 +26,10 @@ async function connectDataBase() {
 
 
 const app = express();
-app.use(express.json())
 app.use(cookieParser())
-app.use(cors());
+
 app.use(express.json())
+app.use(cors());
 app.use(userRouter);
  
 

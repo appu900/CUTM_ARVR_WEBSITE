@@ -10,17 +10,30 @@ const Homepage = () => {
   const isloggedIn = useSelector((state) => state.auth.userLoggedin);
   const navigate = useNavigate();
 
+
+  const accecToken = ""
+  axios.interceptors.request.use(
+    config => {
+      config.headers.Authorization = `Bearer ${accecToken}`;
+      return config
+    },
+    error =>{
+       return Promise.reject(error)
+    }
+  );
+
+  async function getUserName(){ 
+    try {
+
+      const response = await axios.get("http://localhost:5000/api/user")
+      console.log(response);
+      
+    } catch (error) {
+       console.log(error.message)
+    }
+  }
   
 
-  const getData = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/user");
-      console.log("getting data from server done");
-      console.log(response);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   return (
     <div>
@@ -36,9 +49,13 @@ const Homepage = () => {
         </div>
       </div>
 
-      <div className="mt-10">
-         <button onClick={getData}>get user Data</button>
+      <div>
+        <button 
+        onClick={getUserName}
+        className="border border-black bg-black text-white">get data</button>
       </div>
+
+      
     </div>
   );
 };
